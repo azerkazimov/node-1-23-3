@@ -98,32 +98,166 @@
 
 // express
 
-const express = require("express");
-const app = express();
-// console.log(app);
+// const express = require("express");
+// const app = express();
+// // console.log(app);
 
-const port = 3000;
+// const port = 3000;
 
-// Middleware для парсинга JSON
+// // Middleware для парсинга JSON
 
-app.use(express.json());
+// app.use(express.json());
 
-// Базовый маршрут
+// // Базовый маршрут
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+// app.get("/", (req, res) => {
+//   res.send("Hello World!");
+// });
+
+// // POST маршрут
+
+// app.post("/users", (req, res) => {
+//   const user = req.body;
+
+//   res.json({ message: "User created", user });
+// });
+
+// // Запуск сервера
+
+// app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });
+
+
+// const fs = require('fs');
+
+// process.env.UV_THREADPOOL_SIZE = 4;
+
+// // // 10 одновременных операций чтения
+// for (let i = 0; i < 10; i++) {
+//     fs.readFile(`file${i}.txt`, (err, data) => {
+//         console.log(`Файл ${i} прочитан`);
+//     });
+// }
+
+// process.nextTick(()=>{console.log('nexttick -1');
+// })
+
+
+// console.log('1. Start'); // sync
+
+// setTimeout(() => {
+//     console.log('4. setTimeout');  // macrotask
+// }, 0);
+
+// Promise.resolve().then(()=>console.log('5. promise'))  // fullfilled (success) // microtask
+
+// process.nextTick(() => {
+//     console.log('2. nextTick'); // nextTick
+// });
+
+// console.log('3. End');  // sync
+
+function timestamp(){
+  return performance.now().toFixed(2)
+}
+
+// console.log('1: Sync start', timestamp());
+
+// setTimeout(() => {
+//     console.log('6: setTimeout', timestamp());
+    
+//     process.nextTick(() => {
+//         console.log('7: nextTick in setTimeout', timestamp());
+//     });
+    
+//     Promise.resolve().then(() => {
+//         console.log('8: Promise in setTimeout', timestamp());
+//     });
+// }, 0);
+
+// setImmediate(() => {
+//     console.log('9: setImmediate', timestamp());
+// });
+
+// Promise.resolve()
+//     .then(() => {
+//         console.log('3: Promise 1', timestamp());
+//         return Promise.resolve();
+//     })
+//     .then(() => {
+//         console.log('4: Promise 2', timestamp());
+//     });
+
+// process.nextTick(() => {
+//     console.log('2: nextTick 1', timestamp());
+    
+//     process.nextTick(() => {
+//         console.log('5: nextTick nested', timestamp());
+//     });
+// });
+
+// setImmediate(() => {
+//     console.log('Immediate 1', timestamp());
+    
+//     setImmediate(() => {
+//         console.log('Immediate 3 (next iteration)', timestamp());
+//     });
+// });
+
+// setImmediate(() => {
+//     console.log('Immediate 2', timestamp());
+// });
+// setImmediate(() => {
+//     console.log('Immediate 4', timestamp());
+// });
+// setImmediate(() => {
+//     console.log('Immediate 6', timestamp());
+// });
+
+// console.log('10: Sync end', timestamp());
+
+
+const fs = require('fs');
+
+console.log('1: Start');
+
+// Microtasks
+process.nextTick(() => console.log('2: nextTick 1'));
+Promise.resolve().then(() => console.log('3: Promise 1'));
+
+// Event Loop: Timers
+setTimeout(() => {
+    console.log('7: setTimeout 1');
+    process.nextTick(() => console.log('8: nextTick in setTimeout'));
+}, 0);
+
+setTimeout(() => {
+    console.log('9: setTimeout 2');
+}, 0);
+
+// Event Loop: Check
+setImmediate(() => {
+    console.log('10: setImmediate 1');
+    process.nextTick(() => console.log('11: nextTick in setImmediate'));
 });
 
-// POST маршрут
-
-app.post("/users", (req, res) => {
-  const user = req.body;
-
-  res.json({ message: "User created", user });
+setImmediate(() => {
+    console.log('12: setImmediate 2');
 });
 
-// Запуск сервера
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+// I/O
+fs.readFile(__filename, () => {
+    console.log('13: I/O callback');
+    
+    setTimeout(() => console.log('16: setTimeout in I/O'), 0);
+    setImmediate(() => console.log('14: setImmediate in I/O'));
+    
+    process.nextTick(() => console.log('15: nextTick in I/O'));
 });
+
+// Microtasks
+process.nextTick(() => console.log('4: nextTick 2'));
+Promise.resolve().then(() => console.log('5: Promise 2'));
+
+console.log('6: End');
