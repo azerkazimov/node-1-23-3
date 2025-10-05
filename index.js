@@ -128,7 +128,6 @@
 //   console.log(`Server running at http://localhost:${port}`);
 // });
 
-
 // const fs = require('fs');
 
 // process.env.UV_THREADPOOL_SIZE = 4;
@@ -142,7 +141,6 @@
 
 // process.nextTick(()=>{console.log('nexttick -1');
 // })
-
 
 // console.log('1. Start'); // sync
 
@@ -158,19 +156,21 @@
 
 // console.log('3. End');  // sync
 
-function timestamp(){
-  return performance.now().toFixed(2)
+function timestamp() {
+  return performance.now().toFixed(2);
 }
+
+module.exports = {timestamp}
 
 // console.log('1: Sync start', timestamp());
 
 // setTimeout(() => {
 //     console.log('6: setTimeout', timestamp());
-    
+
 //     process.nextTick(() => {
 //         console.log('7: nextTick in setTimeout', timestamp());
 //     });
-    
+
 //     Promise.resolve().then(() => {
 //         console.log('8: Promise in setTimeout', timestamp());
 //     });
@@ -191,7 +191,7 @@ function timestamp(){
 
 // process.nextTick(() => {
 //     console.log('2: nextTick 1', timestamp());
-    
+
 //     process.nextTick(() => {
 //         console.log('5: nextTick nested', timestamp());
 //     });
@@ -199,7 +199,7 @@ function timestamp(){
 
 // setImmediate(() => {
 //     console.log('Immediate 1', timestamp());
-    
+
 //     setImmediate(() => {
 //         console.log('Immediate 3 (next iteration)', timestamp());
 //     });
@@ -217,47 +217,57 @@ function timestamp(){
 
 // console.log('10: Sync end', timestamp());
 
+const fs = require("fs");
 
-const fs = require('fs');
-
-console.log('1: Start');
+console.log("1: Start");
 
 // Microtasks
-process.nextTick(() => console.log('2: nextTick 1'));
-Promise.resolve().then(() => console.log('3: Promise 1'));
+process.nextTick(() => console.log("2: nextTick 1"));
+Promise.resolve().then(() => console.log("3: Promise 1"));
 
 // Event Loop: Timers
 setTimeout(() => {
-    console.log('7: setTimeout 1');
-    process.nextTick(() => console.log('8: nextTick in setTimeout'));
+  console.log("7: setTimeout 1");
+  process.nextTick(() => console.log("8: nextTick in setTimeout"));
 }, 0);
 
 setTimeout(() => {
-    console.log('9: setTimeout 2');
+  console.log("9: setTimeout 2");
 }, 0);
 
 // Event Loop: Check
 setImmediate(() => {
-    console.log('10: setImmediate 1');
-    process.nextTick(() => console.log('11: nextTick in setImmediate'));
+  console.log("10: setImmediate 1");
+  process.nextTick(() => console.log("11: nextTick in setImmediate"));
 });
 
 setImmediate(() => {
-    console.log('12: setImmediate 2');
+  console.log("12: setImmediate 2");
 });
 
 // I/O
 fs.readFile(__filename, () => {
-    console.log('13: I/O callback');
-    
-    setTimeout(() => console.log('16: setTimeout in I/O'), 0);
-    setImmediate(() => console.log('14: setImmediate in I/O'));
-    
-    process.nextTick(() => console.log('15: nextTick in I/O'));
+  console.log("13: I/O callback");
+
+  setTimeout(() => console.log("16: setTimeout in I/O"), 0);
+  setImmediate(() => console.log("14: setImmediate in I/O"));
+
+  process.nextTick(() => console.log("15: nextTick in I/O"));
 });
 
 // Microtasks
-process.nextTick(() => console.log('4: nextTick 2'));
-Promise.resolve().then(() => console.log('5: Promise 2'));
+process.nextTick(() => console.log("4: nextTick 2"));
+Promise.resolve().then(() => console.log("5: Promise 2"));
 
-console.log('6: End');
+console.log("6: End");
+
+// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 ...
+
+function fib(n) {
+  // here is your code ...
+  if (n === 0 || n === 1) return n;
+
+  return fib(n - 1) + fib(n + 1);
+}
+
+console.log(fib(4));
