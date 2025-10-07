@@ -1,0 +1,92 @@
+html {
+    height: 90%;
+}
+
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    background: radial-gradient(circle, #383A37, #3D3C37, #3F3F37, #423F30, #363531, #323230);
+}
+
+main {
+    align-self: center;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-family: 'Baloo Paaji', sans-serif;
+    font-weight: normal;
+    color: white;
+    margin: 0;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: 0.25rem;
+    background: linear-gradient(to bottom, #758376, #48524A, #373737, #373737, #373737, #373737, #373737, #373737, #33302B, #33302B);
+    box-shadow: 0 10px 20px #000;
+}
+
+label {
+    color: white;
+    margin: 0.4rem 0;
+    font-weight: bolder;
+}
+
+input[type=text],
+textarea {
+    outline: none;
+}
+
+input[type=text] {
+    border-radius: 2rem;
+    border: none;
+    height: 2.5rem;
+    padding: 0 1rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    margin-bottom: 0.9rem;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 8px #232323;
+}
+
+input::placeholder {
+    font-weight: normal;
+}
+
+textarea {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    line-height: 1.5rem;
+    font-size: 0.9rem;
+    font-family: sans-serif;
+    box-shadow: 0 4px 8px #232323;
+    border: none;
+    resize: none;
+}
+
+input[type=submit] {
+    border-radius: 2rem;
+    border: none;
+    height: 2.2rem;
+    padding: 0 0.6rem;
+    width: 60%;
+    margin-top: 1rem;
+    font-family: 'Baloo Paaji', sans-serif;
+    font-size: 1.3rem;
+    background: linear-gradient(to bottom, #EFD282, #D89E4A, #8E4B17);
+    font-weight: 600;
+    box-shadow: 0 4px 8px #232323;
+}
+
+input[type=submit]:hover {
+    cursor: pointer;
+    background: linear-gradient(to bottom, rgba(239, 210, 130, 0.75), rgba(216, 158, 74, 0.75), rgba(142, 75, 23, 0.75));
+}
